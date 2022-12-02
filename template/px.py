@@ -1,5 +1,6 @@
 def sol(lines):
-    return len(lines)
+    print(lines)
+    return 0
 
 def main():
     
@@ -8,6 +9,8 @@ def main():
     
     ans = sol(lines)
 
-    print(ans)
+    return ans
 
-main()
+# cp p1.py p2.py
+ans = main()
+print(ans)

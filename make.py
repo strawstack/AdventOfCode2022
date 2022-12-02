@@ -19,8 +19,8 @@ except:
 template = open("template/px.py", "r").read()
 p1 = open(f"day/{day_number}/p1.py", "w")
 p1.write(template)
-p2 = open(f"day/{day_number}/p2.py", "w")
-p2.write(template)
+#p2 = open(f"day/{day_number}/p2.py", "w")
+#p2.write(template)
 
 # Get input file
 session = open("secret.txt").read().strip()

@@ -1,13 +1,15 @@
 def sol(lines):
-    lines = lines.split("\n\n")
-    lines = map(lambda x: x.split("\n"), lines)
-    lines = map(lambda x: [int(y) for y in x], lines)
-    totals = map(lambda x: sum(x), lines)
+    lines = [
+        [int(y) 
+        for y in x.split("\n")] 
+        for x in lines.split("\n\n")]
+    totals = [sum(x) for x in lines]
     return max(totals)
 
 def main():
     lines = open("input.txt").read().strip()
     ans = sol(lines)
-    print(ans)
+    return ans
 
-main()
+ans = main()
+print(ans)
