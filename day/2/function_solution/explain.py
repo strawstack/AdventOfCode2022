@@ -69,4 +69,18 @@ for abc in "ABC":
 
 # A 3D function that accepts two ASCII values and returns a score looks like this!
 
-z=3 cos(((2 π (y-x-32))/(3))-2)+1+y-87
+# z=3 cos(((2 π (y-x-32))/(3))-2)+1+y-87
+
+s = """
+For day 2 part 1, it's possible to represent the outcome of each match as an integer by subtracting the ASCII values of the letters in the input file from each other.
+
+With the right offsets, one can find that the following integers map to the given outcomes:
+
+1 or -2 -> Win
+-1 or 2 -> Lose
+0 -> Draw
+
+We can find a function that takes these values as input and outputs the score for a match. Rounding the result of the function shown to the nearest integer and multiplying by 3, outputs the correct score 0, 3, or 6 for each match.
+
+It's also possible to define a 3D function that takes two ASCII letters as inputs (x, y) and outputs z: the total score for a match, which also takes into account the points we get (1, 2, or 3) depending on the item we chose.
+"""
