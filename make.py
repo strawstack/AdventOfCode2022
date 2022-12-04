@@ -27,3 +27,7 @@ session = open("secret.txt").read().strip()
 cmd = f"curl -b 'session={session}' https://adventofcode.com/{year}/day/{day_number}/input > day/{day_number}/input.txt"
 
 os.system(cmd)
+
+# Example command
+# Gets input, create files, cd into given day, run p1 code 
+# python3 make.py 4 && cd day/4 && python3 p1.py
