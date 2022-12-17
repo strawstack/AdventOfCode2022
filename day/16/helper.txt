@@ -1,0 +1,35 @@
+== Minute 2 ==
+You open valve DD.
+
+== Minute 5 ==
+You open valve BB.
+
+== Minute 9 ==
+Valves BB and DD are open, releasing 33 pressure.
+You open valve JJ.
+
+== Minute 17 ==
+Valves BB, DD, and JJ are open, releasing 54 pressure.
+You open valve HH.
+
+== Minute 21 ==
+Valves BB, DD, HH, and JJ are open, releasing 76 pressure.
+You open valve EE.
+
+== Minute 24 ==
+Valves BB, DD, EE, HH, and JJ are open, releasing 79 pressure.
+You open valve CC.
+
+DD = (30 - 2) * 20 = 560
+
+BB = (30 - 5) * 13 = 325
+
+JJ = (30 - 9) * 21 = 441
+
+HH = (30 - 17) * 22 = 286
+
+EE = (30 - 21) * 3 = 27
+
+CC = (30 - 24) * 2 = 12
+
+560 + 325 + 441 + 286 + 27 + 12 = 1651
