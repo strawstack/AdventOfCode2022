@@ -218,11 +218,6 @@ def sol(jet):
 
     rocksLeft = (BIG_NUM - totalRocks) % rocksPerHeight
 
-    # run again rocksLeft number of times
-
-    # Test answer
-    #print("1514285714288 (test ans)")
-
     return totalHeight + heightLookup[rocksLeft]
 
 def main():
