@@ -1,5 +1,6 @@
 def sol(lines):
-    print(lines)
+    for line in lines:
+        print(line)
     return 0
 
 def main():
