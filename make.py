@@ -30,4 +30,4 @@ os.system(cmd)
 
 # Example command
 # Gets input, create files, cd into given day, run p1 code 
-# python3 make.py 20 && cd day/20 && python3 p1.py
+# python3 make.py 21 && cd day/21 && python3 p1.py
