@@ -75,6 +75,8 @@ def buildBot(blueprint, dState, botKey, limit, q):
 
         # Add state to heap
         heapq.heappush(q, (state["geo"], dumps(state)))
+        while len(q) > 300000:
+            q.pop()
 
     return None
 
@@ -146,7 +148,7 @@ def getMaxGeos(blueprint):
     #limit = getLimits(blueprint)
 
     state = {
-        "time": 24,
+        "time": 32,
         "ore":  0,
         "clay": 0,
         "obs":  0,
@@ -191,8 +193,8 @@ def sol(lines):
             }
         )
 
-    total = 0
-    for i in range(len(blueprints)):
+    total = 1
+    for i in range(3):
 
         # These return zero as far as I can tell
         #if (i + 1) in [1, 3, 4, 9, 11, 12, 13, 14, 15, 17, 28, 30]:
@@ -200,9 +202,8 @@ def sol(lines):
 
         blueprint = blueprints[i]
         geos = getMaxGeos(blueprint)
-        ql = (i + 1) * geos
-        print(f"{i + 1} * {geos}: {ql}")
-        total += ql
+        print(f"{i + 1}: {geos}")
+        total *= geos
 
     return total
 

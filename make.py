@@ -29,5 +29,5 @@ cmd = f"curl -b 'session={session}' https://adventofcode.com/{year}/day/{day_num
 os.system(cmd)
 
 # Example command
-# Gets input, create files, cd into given day, run p1 code 
-# python3 make.py 21 && cd day/21 && python3 p1.py
+# Gets input, create files, cd into given day, run p1 code
+# python3 make.py 24 && cd day/24 && python3 p1.py
