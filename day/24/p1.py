@@ -1,4 +1,5 @@
 from Queue import Queue
+import math
 
 def copyBlizzards(blizzards):
     newBlizzards = {}
@@ -9,12 +10,17 @@ def copyBlizzards(blizzards):
 def eq(a, b):
     return a[0] == b[0] and a[1] == b[1]
 
+def eq_d(a, b):
+    for k in a:
+        if k not in b:
+            return False
+    for k in b:
+        if k not in a:
+            return False
+    return True
+
 def add(a, b):
     return (a[0] + b[0], a[1] + b[1])
-
-def inBounds(ROWS, COLS, pos):
-    (r, c) = pos
-    return r >= 0 and r < ROWS and c >= 0 and c < COLS
 
 def updateBlizzards(ROWS, COLS, blizzards):
     dirLookup = [
@@ -42,18 +48,17 @@ def updateBlizzards(ROWS, COLS, blizzards):
 
     return newBlizzards
 
-def bfs(ROWS, COLS, blizzards, time, pos, endPos):
+def bfs(ROWS, COLS, openCells, time, pos, endPos):
     q = Queue()
-    q.push( (copyBlizzards(blizzards), time, pos) )
+    q.push( (time, pos) )
 
-    while True:
-        blizzards, time, pos = q.pop()
-        blizzards = updateBlizzards(ROWS, COLS, blizzards)
+    while q.queue_size() > 0:
+        time, pos = q.pop()
+        time += 1
+        openCell = openCells[time % len(openCells)]
 
         if eq(pos, endPos):
-            return time
-
-        print(pos, time)
+            return time + 1
 
         dirs = [
             (-1, 0),
@@ -64,8 +69,33 @@ def bfs(ROWS, COLS, blizzards, time, pos, endPos):
 
         for delta in dirs:
             newPos = add(pos, delta)
-            if pos not in blizzards and inBounds(ROWS, COLS, pos):
-                q.push( (copyBlizzards(blizzards), time + 1, newPos) )
+            if newPos in openCell:
+                q.push( (time, newPos) )
+
+    return float("inf")
+
+def renderBliz(ROWS, COLS, bliz):
+    lookup = ["^", ">", "v", "<"]
+    for r in range(ROWS):
+        for c in range(COLS):
+            if (r, c) in bliz:
+                if len(bliz[(r, c)]) == 1:
+                    print(lookup[bliz[(r, c)][0]], end="")
+                else:
+                    print(len(bliz[(r, c)]), end="")
+            else:
+                print(".", end="")
+        print("")
+
+def renderOpenCells(ROWS, COLS, cells):
+    lookup = ["^", ">", "v", "<"]
+    for r in range(ROWS):
+        for c in range(COLS):
+            if (r, c) in cells:
+                print("O", end="")
+            else:
+                print(".", end="")
+        print("")
 
 def sol(lines):
 
@@ -85,35 +115,35 @@ def sol(lines):
         for c in range(1, COLS - 1):
             letter = lines[r][c]
             if letter != ".":
-                blizzards[(r, c)] = [dirLookup[letter]]
-
-    #
-    # TODO: verify list of blizzards is accurate
-    #
+                blizzards[(r - 1, c - 1)] = [dirLookup[letter]]
 
     # Remove walls
     ROWS -= 2
     COLS -= 2
 
-    # [{time:, blizzards:}, ...]
-    # for all times when (0, 0) cell is free
-    startStates = []
-    cBlizzards = copyBlizzards(blizzards)
-    LIMIT = COLS
-    for i in range(1, LIMIT):
-        if (0, 0) not in cBlizzards:
-            startStates.append({
-                "time": i,
-                "blizzards": cBlizzards
-            })
-        cBlizzards = updateBlizzards(ROWS, COLS, cBlizzards)
+    allBizzards = []
+    LIMIT = math.lcm(ROWS, COLS)
+    cBliz = copyBlizzards(blizzards)
+    for i in range(0, LIMIT):
+        allBizzards.append(cBliz)
+        cBliz = updateBlizzards(ROWS, COLS, cBliz)
 
-    endPos = (ROWS - 1, COLS - 1)
+    openCells = []
+    for b in allBizzards:
+        openCell = {}
+        for r in range(ROWS):
+            for c in range(COLS):
+                if (r, c) not in b:
+                    openCell[(r, c)] = True
+        openCells.append(openCell)
 
     bestTime = float("inf")
-    for s in startStates:
-        newTime = bfs(ROWS, COLS, s["blizzards"], s["time"], (0, 0), endPos)
-        bestTime = min(bestTime, newTime + 1)
+
+    endPos = (ROWS - 1, COLS - 1)
+    for i in range(len(openCells)):
+        if (0, 0) in openCells[i]:
+            t = bfs(ROWS, COLS, openCells, i, (0, 0), endPos)
+            bestTime = min(bestTime, t)
 
     return bestTime
 
