@@ -9,7 +9,7 @@ class Queue:
         self.head = None
         self.tail = None
         self.size = 0
-
+    
     def push(self, item):
         self.size += 1
         queueItem = QueueItem(None, None, item)
@@ -33,7 +33,7 @@ class Queue:
             else:
                 self.head = None
             return queueItem.item
-
+    
     def __str__(self):
         return self.__repr__()
 
