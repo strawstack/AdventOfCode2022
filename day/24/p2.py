@@ -62,11 +62,11 @@ def bfs(ROWS, COLS, openCells, time, pos, endPos):
     while q.queue_size() > 0:
         time, pos = q.pop()
 
-        time += 1
-        openCell = openCells[time % len(openCells)]
-
         if eq(pos, endPos):
             return time
+
+        time += 1
+        openCell = openCells[time % len(openCells)]
 
         dirs = [
             (-1, 0),
@@ -143,6 +143,9 @@ def sol(lines):
         allBizzards.append(cBliz)
         cBliz = updateBlizzards(ROWS, COLS, cBliz)
 
+    startPos = (-1, 0)
+    endPos = (ROWS, COLS - 1)
+
     openCells = []
     for b in allBizzards:
         openCell = {}
@@ -150,18 +153,19 @@ def sol(lines):
             for c in range(COLS):
                 if (r, c) not in b:
                     openCell[(r, c)] = True
+
+        openCell[startPos] = True
+        openCell[endPos] = True
+
         openCells.append(openCell)
 
-    bestTime = float("inf")
+    t1 = bfs(ROWS, COLS, openCells, 0, startPos, endPos)
 
-    endPos = (ROWS - 1, COLS - 1)
-    for i in range(len(openCells)):
-        if (0, 0) in openCells[i]:
-            t = bfs(ROWS, COLS, openCells, i, (0, 0), endPos)
-            bestTime = min(bestTime, t)
-            break # debug
+    t2 = bfs(ROWS, COLS, openCells, t1, endPos, startPos)
 
-    return bestTime
+    totalTime = bfs(ROWS, COLS, openCells, t2, startPos, endPos)
+
+    return totalTime
 
 def main():
 
